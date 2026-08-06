@@ -1,3 +1,5 @@
+<img src="https://capsule-render.vercel.app/api?type=rect&color=0:1a2a4a,100:2c5364&height=120&section=header" width="100%"/>
+
 <h1 align="center">Hi, I'm Shalinee Singh 👋</h1>
 <h3 align="center">RPA Developer | Business Analyst | Data Analyst | AI/ML Enthusiast</h3>
 
@@ -14,12 +16,12 @@
 
 ### 👩‍💻 About Me
 
-I'm an IT professional with **10+ years of experience** delivering enterprise automation, business process optimization, and AI-enabled solutions across banking, finance, HR, and healthcare. I've led RPA projects end-to-end — from requirements gathering to production support, and I'm now expanding into **data analytics and machine learning**, currently pursuing an **MS in Business Analytics at DePaul University (GPA 3.83/4.0)**.
+I'm an IT professional with **10+ years of experience** delivering enterprise automation, business process optimization, and AI-enabled solutions across banking, finance, HR, and healthcare. I've led RPA projects end-to-end — from requirements gathering to production support — and I'm now expanding into **data analytics and machine learning**, currently pursuing an **MS in Business Analytics at DePaul University (GPA 4.0/4.0)**.
 
 - 🤖 10+ years building **Blue Prism / UiPath** automations (50+ enterprise bots in production)
 - 🧠 Integrating **GenAI (GPT-4, Azure OpenAI, RAG, LangChain)** into automation and document processing workflows
 - 📊 Building **Machine Learning models** and dashboards with Python, Scikit-learn, and Tableau
-- 📋 Experienced Business Analyst — BRD/FRD/PDD/SOP, stakeholder workshops, ROI & gap analysis, Task Mining
+- 📋 Experienced Business Analyst — BRD/FRD, stakeholder workshops, ROI & gap analysis
 - 🎓 Currently studying ML, AI, and Data Science at DePaul University
 - 🌱 Actively posting my Python, Tableau, and ML projects here on GitHub — check back often!
 
@@ -57,16 +59,14 @@ I'm an IT professional with **10+ years of experience** delivering enterprise au
 
 ### 📌 Featured Projects
 
-> _Repo links below are placeholders — swap in the real GitHub URL as you upload each project._
-
 | Project | Description | Tech |
 |---|---|---|
 | 🔗 [Predicting SLA Outcomes in RPA Operations](#) | Cleaned and modeled 620 bot process-run records across 6 departments to predict SLA breach; k-means clustering revealed an operating-condition profile linked to a 63% vs 38% SLA-met rate, and a tuned logistic regression classifier reached 73% test accuracy. | R, Logistic Regression, Decision Trees, k-means |
-| 🔗 [Flight Booking Price Prediction](https://colab.research.google.com/drive/1HpPeSCgRFXxajE0-asOtokGfM8bYVnlH) | Predicted flight ticket prices from route, airline, class, and days-to-departure; Random Forest beat Linear Regression (R² 0.99 vs 0.93), with travel class emerging as the dominant price driver, plus route/pricing-trend visuals for OTA promotion decisions. | Python, Random Forest, Linear Regression, Feature Importance |
+| 🔗 [Flight Booking Price Prediction](https://colab.research.google.com/drive/1Y_UzfMizA_SdK-x037V3i2dKk_Dc8bwX) | Predicted flight ticket prices from route, airline, class, and days-to-departure; Random Forest beat Linear Regression (R² 0.99 vs 0.93), with travel class emerging as the dominant price driver, plus route/pricing-trend visuals for OTA promotion decisions. | Python, Random Forest, Linear Regression, Feature Importance |
 | 🔗 [AI-Driven Revenue Forecasting & Advertising Impact Dashboard](#) | Combined regression and Random Forest models with Tableau for real-time revenue prediction and a what-if simulator for ad spend, with MAPE/RMSE accuracy tracking. | Python, Random Forest, Regression, Tableau |
 | 🔗 [Retail Sales & Profitability Dashboard](#) | Analyzed a retail dataset to identify profit drivers, loss-making categories, and underperforming regions; built interactive Tableau dashboards with filters and KPIs for business and technical stakeholders. | Tableau |
-| 🔗 [Ad Spend & Sales Prediction](#) | Built a multiple linear regression model predicting sales from TV, radio, and newspaper ad spend, reaching an R² of 90.2% and quantifying mean absolute/squared error to validate fit. | Python, Multiple Linear Regression |
-| 🔗 [UK Crime Prediction with AWS SageMaker](#) | Trained an XGBoost classifier on SageMaker (with data pulled from SageMaker Feature Store) to predict crime-related outcomes on a 250K+ row dataset, evaluating performance via confusion matrix and classification report. | AWS SageMaker, XGBoost, Feature Store |
+| 🔗 [Ad Spend & Sales Prediction](https://colab.research.google.com/drive/1sjuuM2YU0cxR95IonXIldE8WBNmhuO27) | Built a multiple linear regression model predicting sales from TV, radio, and newspaper ad spend, reaching an R² of 90.2% and quantifying mean absolute/squared error to validate fit. | Python, Multiple Linear Regression |
+| 🔗 [UK Crime Prediction with AWS SageMaker](https://colab.research.google.com/drive/1h-F3qfIR2sjAFpGmIqwkqGw2GzJo77tF) | Trained an XGBoost classifier on SageMaker (with data pulled from SageMaker Feature Store) to predict crime-related outcomes on a 250K+ row dataset, evaluating performance via confusion matrix and classification report. | AWS SageMaker, XGBoost, Feature Store |
 
 ---
 
