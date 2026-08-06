@@ -14,12 +14,12 @@
 
 ### 👩‍💻 About Me
 
-I'm an IT professional with **10+ years of experience** delivering enterprise automation, business process optimization, and AI-enabled solutions across banking, finance, HR, and healthcare. I've led RPA projects end-to-end — from requirements gathering to production support — and I'm now expanding into **data analytics and machine learning**, currently pursuing an **MS in Business Analytics at DePaul University (GPA 4.0/4.0)**.
+I'm an IT professional with **10+ years of experience** delivering enterprise automation, business process optimization, and AI-enabled solutions across banking, finance, HR, and healthcare. I've led RPA projects end-to-end — from requirements gathering to production support, and I'm now expanding into **data analytics and machine learning**, currently pursuing an **MS in Business Analytics at DePaul University (GPA 3.83/4.0)**.
 
 - 🤖 10+ years building **Blue Prism / UiPath** automations (50+ enterprise bots in production)
 - 🧠 Integrating **GenAI (GPT-4, Azure OpenAI, RAG, LangChain)** into automation and document processing workflows
 - 📊 Building **Machine Learning models** and dashboards with Python, Scikit-learn, and Tableau
-- 📋 Experienced Business Analyst — BRD/FRD, stakeholder workshops, ROI & gap analysis
+- 📋 Experienced Business Analyst — BRD/FRD/PDD/SOP, stakeholder workshops, ROI & gap analysis, Task Mining
 - 🎓 Currently studying ML, AI, and Data Science at DePaul University
 - 🌱 Actively posting my Python, Tableau, and ML projects here on GitHub — check back often!
 
