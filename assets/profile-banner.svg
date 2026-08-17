@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title desc">
+<title id="title">Shalinee Singh, Intelligent Automation and Analytics Engineer</title>
+<desc id="desc">A professional banner connecting automation workflows, artificial intelligence, and business analytics.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#0b1f33"/><stop offset="1" stop-color="#123f5a"/>
+  </linearGradient>
+  <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#39c6b3"/><stop offset="1" stop-color="#78a9ff"/>
+  </linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="7"/></filter>
+</defs>
+<rect width="1280" height="360" rx="24" fill="url(#bg)"/>
+<circle cx="1110" cy="55" r="170" fill="#1d6480" opacity=".18"/>
+<circle cx="1000" cy="330" r="215" fill="#28518c" opacity=".17"/>
+<path d="M765 80 C845 80 835 150 915 150 S985 225 1065 225 S1135 285 1210 285" fill="none" stroke="#55d7c4" stroke-width="18" opacity=".11" filter="url(#glow)"/>
+<g font-family="Arial,Helvetica,sans-serif">
+  <text x="72" y="112" font-size="22" font-weight="700" letter-spacing="3" fill="#55d7c4">INTELLIGENT AUTOMATION • AI • ANALYTICS</text>
+  <text x="72" y="190" font-size="58" font-weight="700" fill="#ffffff">Shalinee Singh</text>
+  <text x="72" y="238" font-size="26" fill="#d7e7f2">Turning complex operations into reliable, data-driven systems</text>
+  <rect x="72" y="276" width="500" height="4" rx="2" fill="url(#accent)"/>
+</g>
+<g stroke="#8adfd2" stroke-width="3" fill="#102f46">
+  <line x1="805" y1="95" x2="905" y2="178"/><line x1="905" y1="178" x2="1040" y2="108"/>
+  <line x1="905" y1="178" x2="1025" y2="278"/><line x1="1040" y1="108" x2="1165" y2="190"/>
+  <line x1="1025" y1="278" x2="1165" y2="190"/>
+  <circle cx="805" cy="95" r="22"/><circle cx="905" cy="178" r="28"/>
+  <circle cx="1040" cy="108" r="22"/><circle cx="1025" cy="278" r="22"/><circle cx="1165" cy="190" r="28"/>
+</g>
+<g font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">
+  <text x="805" y="99">RPA</text><text x="905" y="182">AI</text><text x="1040" y="112">DATA</text>
+  <text x="1025" y="282">ML</text><text x="1165" y="194">VALUE</text>
+</g>
+</svg>
