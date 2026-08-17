@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="520" viewBox="0 0 1000 520" role="img" aria-labelledby="title desc">
+<title id="title">AI Document Processing and Automation architecture</title>
+<desc id="desc">Documents flow through OCR, structured AI extraction, deterministic validation, and RPA-ready routing.</desc>
+<rect width="1000" height="520" rx="22" fill="#f5f8fb"/>
+<rect width="1000" height="92" rx="22" fill="#123f5a"/>
+<rect y="70" width="1000" height="22" fill="#123f5a"/>
+<text x="48" y="56" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#ffffff">AI Document Processing &amp; Automation</text>
+<g font-family="Arial,sans-serif">
+<g fill="#ffffff" stroke="#cbd9e5" stroke-width="2">
+<rect x="50" y="155" width="170" height="112" rx="14"/><rect x="290" y="155" width="170" height="112" rx="14"/>
+<rect x="530" y="155" width="170" height="112" rx="14"/><rect x="770" y="155" width="180" height="112" rx="14"/>
+</g>
+<g fill="#123f5a" font-size="19" font-weight="700" text-anchor="middle">
+<text x="135" y="202">Documents</text><text x="135" y="231">PDF • Image • Text</text>
+<text x="375" y="202">OCR &amp; Extraction</text><text x="375" y="231">Tesseract • PyMuPDF</text>
+<text x="615" y="202">Structured AI</text><text x="615" y="231">OpenAI • Pydantic</text>
+<text x="860" y="202">Validation</text><text x="860" y="231">Rules • Confidence</text>
+</g>
+<g stroke="#39b7a5" stroke-width="5" fill="none"><path d="M220 211h70"/><path d="M460 211h70"/><path d="M700 211h70"/></g>
+<g fill="#39b7a5"><path d="M290 211l-14-9v18z"/><path d="M530 211l-14-9v18z"/><path d="M770 211l-14-9v18z"/></g>
+<rect x="170" y="340" width="660" height="110" rx="18" fill="#e8f3f5" stroke="#8fc8c2" stroke-width="2"/>
+<text x="500" y="380" font-size="20" font-weight="700" fill="#123f5a" text-anchor="middle">Automation decision</text>
+<g font-size="17" font-weight="700" text-anchor="middle">
+<text x="305" y="421" fill="#18864b">READY FOR RPA</text><text x="500" y="421" fill="#b36b00">MANUAL REVIEW</text><text x="695" y="421" fill="#b33a3a">REJECT</text>
+</g>
+<text x="500" y="492" font-size="17" fill="#526b7c" text-anchor="middle">FastAPI • Streamlit • Docker • Tests • GitHub Actions</text>
+</g></svg>
