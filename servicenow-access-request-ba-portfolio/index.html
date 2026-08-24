@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Functional prototype for a ServiceNow employee access request workflow and Business Analyst portfolio project.">
+  <title>AccessFlow | HUB International Hypothetical Case Study</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">AF</span>
+      <div><strong>AccessFlow</strong><span>HUB International hypothetical case study</span></div>
+    </div>
+    <div class="prototype-badge">Portfolio prototype</div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">HYPOTHETICAL INSURANCE BROKERAGE SCENARIO</p>
+        <h1>One request. Clear approvals. Visible SLAs.</h1>
+        <p class="hero-copy">A functional workflow prototype designed for configuration in ServiceNow Request Management and Flow Designer.</p>
+      </div>
+      <button class="primary" id="openForm">+ New access request</button>
+    </section>
+
+    <section class="metrics" aria-label="Workflow metrics">
+      <article><span>Total requests</span><strong id="metricTotal">0</strong><small>All prototype records</small></article>
+      <article><span>Open requests</span><strong id="metricOpen">0</strong><small>Awaiting action</small></article>
+      <article><span>SLA compliance</span><strong id="metricSla">0%</strong><small>Closed within target</small></article>
+      <article><span>Avg. cycle time</span><strong id="metricCycle">0h</strong><small>Completed requests</small></article>
+    </section>
+
+    <section class="workflow-card">
+      <div class="section-heading">
+        <div><p class="eyebrow">WORKFLOW</p><h2>Approval and fulfillment path</h2></div>
+        <select id="roleFilter" aria-label="Filter action role">
+          <option value="all">All roles</option>
+          <option value="manager">Manager</option>
+          <option value="owner">Application owner</option>
+          <option value="fulfiller">IT fulfiller</option>
+        </select>
+      </div>
+      <div class="flow" aria-label="Process flow">
+        <div><b>1</b><span>Submit request</span></div><i>→</i>
+        <div><b>2</b><span>Manager approval</span></div><i>→</i>
+        <div><b>3</b><span>Owner approval*</span></div><i>→</i>
+        <div><b>4</b><span>IT fulfillment</span></div><i>→</i>
+        <div><b>5</b><span>Close & notify</span></div>
+      </div>
+      <p class="flow-note">*Application-owner approval is required only for privileged access.</p>
+    </section>
+
+    <section class="requests-card">
+      <div class="section-heading">
+        <div><p class="eyebrow">REQUEST QUEUE</p><h2>Access requests</h2></div>
+        <div class="filters">
+          <input id="searchInput" type="search" placeholder="Search requests" aria-label="Search requests">
+          <select id="statusFilter" aria-label="Filter by status"><option value="all">All statuses</option></select>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Request</th><th>Employee</th><th>Application</th><th>Access</th><th>Status</th><th>SLA</th><th>Action</th></tr></thead>
+          <tbody id="requestRows"></tbody>
+        </table>
+      </div>
+      <div class="empty" id="emptyState" hidden>No requests match the selected filters.</div>
+    </section>
+
+    <section class="evidence">
+      <article><span>BA artifact</span><h3>Requirement-led design</h3><p>Every feature is mapped to a business requirement, user story, acceptance criteria, and UAT scenario.</p></article>
+      <article><span>Control</span><h3>Risk-based approval</h3><p>Privileged access automatically adds application-owner review before fulfillment.</p></article>
+      <article><span>Measurement</span><h3>Operational visibility</h3><p>Cycle time, SLA compliance, backlog, and approval status are calculated from workflow records.</p></article>
+    </section>
+  </main>
+
+  <dialog id="requestDialog">
+    <form id="requestForm" method="dialog">
+      <div class="dialog-heading"><div><p class="eyebrow">CATALOG ITEM</p><h2>Request application access</h2></div><button type="button" class="icon" id="closeForm" aria-label="Close">×</button></div>
+      <div class="form-grid">
+        <label>Employee name<input name="employee" required placeholder="e.g., Jordan Lee"></label>
+        <label>Department<select name="department" required><option value="">Select</option><option>Business Insurance</option><option>Employee Benefits</option><option>Risk Services</option><option>Corporate Operations</option><option>Information Technology</option></select></label>
+        <label>Application<select name="application" required><option value="">Select</option><option>ServiceNow</option><option>Broker CRM</option><option>Claims Portal</option><option>Benefits Analytics</option><option>Power BI</option></select></label>
+        <label>Access level<select name="access" required><option value="">Select</option><option>Standard</option><option>Privileged</option><option>Read only</option></select></label>
+        <label>Required date<input name="requiredDate" type="date" required></label>
+        <label>Manager<input name="manager" required placeholder="e.g., Alex Morgan"></label>
+        <label class="full">Business justification<textarea name="justification" required minlength="12" placeholder="Explain why access is required"></textarea></label>
+      </div>
+      <div class="notice">Submitting creates a request and starts the manager-approval SLA. Privileged access adds application-owner approval.</div>
+      <div class="dialog-actions"><button type="button" class="secondary" id="cancelForm">Cancel</button><button type="submit" class="primary">Submit request</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <footer><p>Independent hypothetical portfolio project using synthetic data. Not affiliated with or endorsed by HUB International or ServiceNow.</p></footer>
+  <script src="assets/app.js"></script>
+</body>
+</html>
