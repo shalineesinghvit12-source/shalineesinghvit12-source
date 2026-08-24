@@ -58,6 +58,26 @@ I have delivered 50+ production automations using Blue Prism and UiPath, led ini
 </tr>
 </table>
 
+## ServiceNow Business Analyst portfolio
+
+<table>
+<tr>
+<td width="42%" valign="top">
+<a href="https://github.com/shalineesinghvit12-source/shalineesinghvit12-source/tree/main/servicenow-access-request-ba-portfolio">
+<img src="servicenow-access-request-ba-portfolio/screenshots/dashboard.svg" width="100%" alt="ServiceNow employee access request workflow dashboard prototype" />
+</a>
+</td>
+<td width="58%" valign="top">
+<h3>Employee Access Request Workflow</h3>
+<p>A functional workflow prototype and complete Business Analyst implementation package. The hypothetical HUB International case study demonstrates standardized intake, risk-based approvals, IT fulfillment, SLA monitoring, operational reporting, and audit-ready documentation using synthetic data.</p>
+<p><strong>ServiceNow • Business Analysis • Workflow Design • User Stories • UAT • Traceability • SOPs • SLA Metrics</strong></p>
+<p>
+<a href="https://github.com/shalineesinghvit12-source/shalineesinghvit12-source/tree/main/servicenow-access-request-ba-portfolio"><strong>View the project and documentation →</strong></a>
+</p>
+</td>
+</tr>
+</table>
+
 ## Core toolkit
 
 <p>
