@@ -1,7 +1,0 @@
-{
-  "name": "servicenow-access-request-ba-portfolio",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Employee access request workflow prototype and ServiceNow Business Analyst portfolio project.",
-  "scripts": {"test": "node tests/workflow.test.js"}
-}
