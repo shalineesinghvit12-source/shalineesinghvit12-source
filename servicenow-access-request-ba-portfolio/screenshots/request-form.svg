@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+  <rect width="1200" height="820" fill="#15263c" opacity=".82"/>
+  <rect x="210" y="65" width="780" height="690" rx="18" fill="white"/>
+  <text x="250" y="112" font-family="Arial" font-size="11" font-weight="700" letter-spacing="1.5" fill="#2b69d1">CATALOG ITEM</text><text x="250" y="148" font-family="Arial" font-size="25" font-weight="700" fill="#15263c">Request application access</text>
+  <circle cx="946" cy="112" r="18" fill="#eef2f7"/><text x="946" y="119" text-anchor="middle" font-family="Arial" font-size="22" fill="#334155">×</text>
+  <g font-family="Arial" font-size="12" font-weight="700" fill="#3d4b5d">
+    <text x="250" y="198">Employee name</text><rect x="250" y="210" width="330" height="44" rx="8" fill="white" stroke="#cdd7e3"/><text x="266" y="237" font-weight="400" fill="#64748b">Maya Patel</text>
+    <text x="620" y="198">Department</text><rect x="620" y="210" width="330" height="44" rx="8" fill="white" stroke="#cdd7e3"/><text x="636" y="237" font-weight="400" fill="#1e293b">Business Insurance</text>
+    <text x="250" y="294">Application</text><rect x="250" y="306" width="330" height="44" rx="8" fill="white" stroke="#cdd7e3"/><text x="266" y="333" font-weight="400" fill="#1e293b">Broker CRM</text>
+    <text x="620" y="294">Access level</text><rect x="620" y="306" width="330" height="44" rx="8" fill="white" stroke="#cdd7e3"/><text x="636" y="333" font-weight="400" fill="#1e293b">Privileged</text>
+    <text x="250" y="390">Required date</text><rect x="250" y="402" width="330" height="44" rx="8" fill="white" stroke="#cdd7e3"/><text x="266" y="429" font-weight="400" fill="#1e293b">08/29/2026</text>
+    <text x="620" y="390">Manager</text><rect x="620" y="402" width="330" height="44" rx="8" fill="white" stroke="#cdd7e3"/><text x="636" y="429" font-weight="400" fill="#64748b">Alex Morgan</text>
+    <text x="250" y="486">Business justification</text><rect x="250" y="498" width="700" height="85" rx="8" fill="white" stroke="#cdd7e3"/><text x="266" y="528" font-weight="400" fill="#1e293b">Support commercial account servicing and approved reporting.</text>
+  </g>
+  <rect x="250" y="610" width="700" height="54" fill="#f1f6fd"/><rect x="250" y="610" width="4" height="54" fill="#2b69d1"/><text x="270" y="634" font-family="Arial" font-size="11" fill="#49617f">Submitting creates a request and starts manager approval.</text><text x="270" y="651" font-family="Arial" font-size="11" fill="#49617f">Privileged access adds application-owner approval.</text>
+  <rect x="754" y="690" width="88" height="40" rx="8" fill="#eef2f7"/><text x="798" y="715" font-family="Arial" font-size="12" font-weight="700" text-anchor="middle" fill="#1e293b">Cancel</text><rect x="854" y="690" width="96" height="40" rx="8" fill="#2b69d1"/><text x="902" y="715" font-family="Arial" font-size="12" font-weight="700" text-anchor="middle" fill="white">Submit</text>
+</svg>
