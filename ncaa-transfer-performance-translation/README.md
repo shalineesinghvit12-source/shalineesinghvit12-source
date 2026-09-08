@@ -216,4 +216,4 @@ Replace the demo CSV inputs with validated historical files using the documented
 
 `clean → validate → EDA → team profiling → transfers → feature engineering → model comparison → historical comparables → staff-facing visualization`
 
-Do not present synthetic-data model metrics as real NCAA recruiting accuracy. Real basketball conclusions should only be reported after retraining and validating the pipeline on actual historical data.
+Real basketball conclusions will only be reported after retraining and validating the pipeline on actual historical data.
