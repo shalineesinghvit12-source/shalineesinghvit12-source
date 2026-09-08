@@ -209,8 +209,8 @@ The project does **not** assume the most complex model is automatically best. Th
 
 Primary metrics:
 
-- **MAE (Mean Absolute Error)** — average absolute prediction error; lower is better
-- **R²** — proportion of outcome variation explained; higher is generally better
+- **MAE (Mean Absolute Error)**- average absolute prediction error; lower is better
+- **R²**- proportion of outcome variation explained; higher is generally better
 
 The committed `outputs/model_metrics.json` is a **synthetic-demo snapshot**, not evidence of real NCAA recruiting accuracy. Current demo results include Linear Regression as the selected model for Player ORtg, TS%, and Usage%, while Random Forest is selected for PPG. These results should be regenerated whenever the modeling code or input data changes.
 
