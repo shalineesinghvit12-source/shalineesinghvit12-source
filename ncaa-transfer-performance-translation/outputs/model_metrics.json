@@ -1,30 +1,34 @@
 {
   "post_player_ortg": {
-    "selected_model": "ridge",
-    "mae": 2.167,
-    "r2": 0.899,
-    "ridge_mae": 2.167,
-    "rf_mae": 2.423
+    "selected_model": "linear",
+    "mae": 2.52,
+    "r2": 0.838,
+    "linear_mae": 2.52,
+    "tree_mae": 3.36,
+    "rf_mae": 2.595
   },
   "post_ts": {
-    "selected_model": "ridge",
-    "mae": 1.761,
-    "r2": 0.675,
-    "ridge_mae": 1.761,
-    "rf_mae": 1.832
+    "selected_model": "linear",
+    "mae": 1.499,
+    "r2": 0.743,
+    "linear_mae": 1.499,
+    "tree_mae": 1.84,
+    "rf_mae": 1.505
   },
   "post_ppg": {
-    "selected_model": "ridge",
-    "mae": 2.683,
-    "r2": 0.782,
-    "ridge_mae": 2.683,
-    "rf_mae": 2.746
+    "selected_model": "rf",
+    "mae": 2.416,
+    "r2": 0.822,
+    "linear_mae": 2.645,
+    "tree_mae": 2.827,
+    "rf_mae": 2.416
   },
   "post_usage": {
-    "selected_model": "ridge",
-    "mae": 1.751,
-    "r2": 0.793,
-    "ridge_mae": 1.751,
-    "rf_mae": 1.812
+    "selected_model": "linear",
+    "mae": 1.732,
+    "r2": 0.82,
+    "linear_mae": 1.732,
+    "tree_mae": 2.466,
+    "rf_mae": 1.905
   }
 }
