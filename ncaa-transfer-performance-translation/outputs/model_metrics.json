@@ -1,34 +1,38 @@
 {
   "post_player_ortg": {
-    "selected_model": "linear",
-    "mae": 2.52,
-    "r2": 0.838,
-    "linear_mae": 2.52,
-    "tree_mae": 3.36,
-    "rf_mae": 2.595
+    "selected_model": "rf",
+    "mae": 3.178,
+    "r2": 0.716,
+    "linear_mae": 4.554,
+    "tree_mae": 3.292,
+    "rf_mae": 3.178,
+    "validation": "time_based_test_2025"
   },
   "post_ts": {
-    "selected_model": "linear",
-    "mae": 1.499,
-    "r2": 0.743,
-    "linear_mae": 1.499,
-    "tree_mae": 1.84,
-    "rf_mae": 1.505
+    "selected_model": "rf",
+    "mae": 1.908,
+    "r2": 0.585,
+    "linear_mae": 3.268,
+    "tree_mae": 2.917,
+    "rf_mae": 1.908,
+    "validation": "time_based_test_2025"
   },
   "post_ppg": {
     "selected_model": "rf",
-    "mae": 2.416,
-    "r2": 0.822,
-    "linear_mae": 2.645,
-    "tree_mae": 2.827,
-    "rf_mae": 2.416
+    "mae": 3.962,
+    "r2": 0.463,
+    "linear_mae": 5.25,
+    "tree_mae": 5.321,
+    "rf_mae": 3.962,
+    "validation": "time_based_test_2025"
   },
   "post_usage": {
-    "selected_model": "linear",
-    "mae": 1.732,
-    "r2": 0.82,
-    "linear_mae": 1.732,
-    "tree_mae": 2.466,
-    "rf_mae": 1.905
+    "selected_model": "rf",
+    "mae": 2.327,
+    "r2": 0.659,
+    "linear_mae": 2.47,
+    "tree_mae": 2.731,
+    "rf_mae": 2.327,
+    "validation": "time_based_test_2025"
   }
 }
