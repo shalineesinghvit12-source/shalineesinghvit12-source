@@ -22,37 +22,43 @@ Used during data-quality review to understand the player scoring distribution an
 
 ### 2. Offensive Rating distribution
 
-![Offensive Rating distribution](outputs/screenshots/offensive_rating_distribution.svg)
+![Offensive Rating distribution]<img width="490" height="305" alt="image" src="https://github.com/user-attachments/assets/eae5aca3-4462-48b4-8f1e-276721948272" />
+
 
 Shows the spread of team offensive efficiency across the five-season dataset.
 
 ### 3. Offensive vs Defensive Efficiency
 
-![Team Offensive vs Defensive Efficiency](outputs/screenshots/team_offense_defense_efficiency.svg)
+![Team Offensive vs Defensive Efficiency] <img width="492" height="339" alt="image" src="https://github.com/user-attachments/assets/2935db08-c540-4c74-b42f-2d393d15547d" />
+
 
 This view helps explain overall team environments: stronger teams generally combine higher offensive efficiency with lower defensive rating.
 
 ### 4. Team efficiency across seasons
 
-![Team Efficiency Across Seasons](outputs/screenshots/team_efficiency_by_season.svg)
+![Team Efficiency Across Seasons] <img width="516" height="317" alt="image" src="https://github.com/user-attachments/assets/c3394cf2-3d9b-4f9b-b68c-ebfb5d80b0a1" />
+
 
 Used to review whether average team efficiency shifts meaningfully by season before combining multiple years of data.
 
 ### 5. Team metric correlation matrix
 
-![Team Metric Correlation Matrix](outputs/screenshots/team_metric_correlation.svg)
+![Team Metric Correlation Matrix]<img width="413" height="331" alt="image" src="https://github.com/user-attachments/assets/f72c391d-ae21-4e1e-aff9-2da2e0b38704" />
+
 
 Used to understand relationships among ORtg, DRtg, Net Rating, pace, shooting, turnover, rebounding, free-throw rate, and schedule strength.
 
 ### 6. K-means elbow analysis
 
-![K-means elbow method](outputs/screenshots/kmeans_elbow_method.svg)
+![K-means elbow method]<img width="408" height="264" alt="image" src="https://github.com/user-attachments/assets/8166e2f4-7282-40e9-a253-37e1f5002b04" />
+
 
 The basketball use case calls for Low / Medium / High environments, so three clusters are used. The elbow view serves as a reasonableness check rather than choosing K blindly.
 
 ### 7. Low / Medium / High team environment profiles
 
-![Low Medium High team profiles](outputs/screenshots/team_environment_profiles.svg)
+![Low Medium High team profiles]<img width="458" height="314" alt="image" src="https://github.com/user-attachments/assets/ab153c48-5595-451f-9ca6-70c437f01189" />
+
 
 Team-season observations are standardized and grouped with K-means. The resulting clusters are ordered by average Net Rating and labeled **Low**, **Medium**, and **High**.
 
