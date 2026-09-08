@@ -29,9 +29,9 @@ The output is intended to add quantitative context to scouting and recruiting di
 
 The repository starts from committed demo inputs in `data/`; there is **no data-generation step required**.
 
-- `team_seasons_demo.csv` — 60 team-season records for 12 fictional programs across 2021–2025
-- `transfers_demo.csv` — 60 synthetic transfer records with pre-transfer, source-team, destination-team, and post-transfer fields
-- `player_seasons_demo.csv.gz` — compressed player-season data used for player-level EDA and schema demonstration
+- `team_seasons_demo.csv` - 60 team-season records for 12 fictional programs across 2021–2025
+- `transfers_demo.csv`  60 synthetic transfer records with pre-transfer, source-team, destination-team, and post-transfer fields
+- `player_seasons_demo.csv.gz` - compressed player-season data used for player-level EDA and schema demonstration
 
 A real-world version would replace these files with validated historical data while keeping the same pipeline structure.
 
@@ -213,8 +213,8 @@ The project does **not** assume Random Forest should win because it is more comp
 
 The primary evaluation metrics are:
 
-- **MAE (Mean Absolute Error)** — average absolute prediction error; lower is better
-- **R²** — proportion of outcome variation explained; higher is generally better
+- **MAE (Mean Absolute Error)** - average absolute prediction error; lower is better
+- **R²** - proportion of outcome variation explained; higher is generally better
 
 The committed demo uses a **time-based validation design**:
 
@@ -273,14 +273,14 @@ The project is designed as a **decision-support tool**, not an automatic recruit
 
 For a candidate transfer, the workflow can provide:
 
-1. **Player context** — pre-transfer PPG, Usage, TS%, ORtg, minutes, assists, turnovers, and rebounding.
-2. **Source environment** — where the production was created: ORtg, DRtg, Net Rating, schedule strength, and Low / Medium / High profile.
-3. **Destination environment** — how different the new team context is.
-4. **Historical translation** — what happened to players making similar environment changes.
-5. **Model projection** — expected post-transfer ORtg, TS%, PPG, and Usage%.
-6. **Comparable transfers** — historically similar player/team-context combinations.
-7. **Model uncertainty context** — MAE and R² so staff can see how much error exists in the model.
-8. **Feature importance** — which inputs the Random Forest relies on most strongly as an additional diagnostic view.
+1. **Player context** - pre-transfer PPG, Usage, TS%, ORtg, minutes, assists, turnovers, and rebounding.
+2. **Source environment** - where the production was created: ORtg, DRtg, Net Rating, schedule strength, and Low / Medium / High profile.
+3. **Destination environment** - how different the new team context is.
+4. **Historical translation** - what happened to players making similar environment changes.
+5. **Model projection** - expected post-transfer ORtg, TS%, PPG, and Usage%.
+6. **Comparable transfers** - historically similar player/team-context combinations.
+7. **Model uncertainty context** - MAE and R² so staff can see how much error exists in the model.
+8. **Feature importance** - which inputs the Random Forest relies on most strongly as an additional diagnostic view.
 
 The goal is to help staff ask better questions, such as whether a player's production is likely to hold when the competition and role change, and which historical examples deserve a closer film review.
 
