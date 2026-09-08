@@ -1,6 +1,6 @@
 """Team profiling, comparable-player search, and transfer performance models.
 
-This version intentionally uses models covered in the project interview prep:
+Model families intentionally match the analytics coursework used in this project:
 K-means, Linear Regression, Decision Tree, Random Forest, and KNN-style
 nearest-neighbor similarity.
 """
@@ -15,7 +15,6 @@ from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, r2_score
 from sklearn.neighbors import NearestNeighbors
 import joblib
@@ -53,6 +52,10 @@ def clean_validate(teams: pd.DataFrame, transfers: pd.DataFrame):
     if missing_team or missing_transfer:
         raise ValueError(f"Missing required columns. team={missing_team}, transfer={missing_transfer}")
 
+    teams["team"] = teams["team"].astype(str).str.strip()
+    transfers["from_team"] = transfers["from_team"].astype(str).str.strip()
+    transfers["to_team"] = transfers["to_team"].astype(str).str.strip()
+
     if "net_rating" not in teams.columns:
         teams["net_rating"] = teams["offensive_rating"] - teams["defensive_rating"]
 
@@ -79,7 +82,6 @@ def profile_teams(teams: pd.DataFrame):
     prof["tier"] = prof["cluster"].map(tier_map)
     prof["net_rating_percentile"] = prof["net_rating"].rank(pct=True).mul(100).round(1)
 
-    # KNN-style similarity engine for comparable team environments.
     nn = NearestNeighbors(metric="euclidean", n_neighbors=min(10, len(prof))).fit(Z)
     return prof, scaler, km, nn, Z
 
@@ -106,16 +108,11 @@ def make_pipeline(kind: str):
     if kind == "linear":
         model = LinearRegression()
     elif kind == "tree":
-        model = DecisionTreeRegressor(
-            max_depth=5, min_samples_leaf=10, random_state=42
-        )
+        model = DecisionTreeRegressor(max_depth=5, min_samples_leaf=10, random_state=42)
     elif kind == "rf":
         model = RandomForestRegressor(
-            n_estimators=300,
-            max_depth=8,
-            min_samples_leaf=5,
-            random_state=42,
-            n_jobs=-1,
+            n_estimators=300, max_depth=8, min_samples_leaf=5,
+            random_state=42, n_jobs=-1
         )
     else:
         raise ValueError(f"Unknown model kind: {kind}")
@@ -123,12 +120,26 @@ def make_pipeline(kind: str):
     return Pipeline([("prep", prep), ("model", model)])
 
 
+def time_split(df: pd.DataFrame):
+    """Train on earlier transfers and test on the latest destination season."""
+    latest = df["to_season"].max()
+    train_idx = np.flatnonzero((df["to_season"] < latest).to_numpy())
+    test_idx = np.flatnonzero((df["to_season"] == latest).to_numpy())
+
+    if len(train_idx) < 30 or len(test_idx) < 10:
+        # Deterministic fallback for very small demonstration datasets.
+        rng = np.random.default_rng(42)
+        idx = np.arange(len(df))
+        rng.shuffle(idx)
+        cut = int(len(idx) * 0.75)
+        return idx[:cut], idx[cut:], "random_75_25"
+    return train_idx, test_idx, f"time_based_test_{int(latest)}"
+
+
 def train_models(df: pd.DataFrame):
-    """Compare Linear Regression, Decision Tree, and Random Forest by MAE."""
+    """Compare Linear Regression, Decision Tree, and Random Forest by test MAE."""
     X = df[NUM_FEATURES + CAT_FEATURES]
-    train_idx, test_idx = train_test_split(
-        np.arange(len(df)), test_size=0.25, random_state=42
-    )
+    train_idx, test_idx, validation = time_split(df)
 
     results = {}
     selected_models = {}
@@ -156,6 +167,7 @@ def train_models(df: pd.DataFrame):
             "linear_mae": round(candidates["linear"]["mae"], 3),
             "tree_mae": round(candidates["tree"]["mae"], 3),
             "rf_mae": round(candidates["rf"]["mae"], 3),
+            "validation": validation,
         }
 
     return selected_models, results
@@ -169,9 +181,7 @@ def build_player_similarity(df: pd.DataFrame):
     ]
     scaler = StandardScaler()
     matrix = scaler.fit_transform(df[similarity_features])
-    nn = NearestNeighbors(
-        n_neighbors=min(10, len(df)), metric="euclidean"
-    ).fit(matrix)
+    nn = NearestNeighbors(n_neighbors=min(10, len(df)), metric="euclidean").fit(matrix)
     return scaler, nn, matrix, similarity_features
 
 
