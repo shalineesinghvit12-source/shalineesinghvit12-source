@@ -12,19 +12,19 @@ The project is designed around a transfer-portal / recruiting workflow. It combi
 
 `clean & validate → EDA → K-means team profiles → transfer-level feature engineering → Linear Regression / Decision Tree / Random Forest → KNN comparables → staff-facing output`
 
-## Selected analysis screenshots
+## Selected analysis visuals
 
-The screenshots below are from the Google Colab analysis used to develop and explain the workflow.
+The views below reproduce the main Google Colab analyses used to develop and explain the workflow.
 
 ### Low / Medium / High team environment profiles
 
-![Low Medium High team profiles](outputs/screenshots/team_environment_profiles.jpg)
+![Low Medium High team profiles](outputs/screenshots/team_environment_profiles.svg)
 
 The team-season observations are grouped with K-means using offensive, defensive, pace, shooting, turnover, rebounding, free-throw and schedule-strength features. Cluster numbers are then ordered by average Net Rating and labeled Low, Medium and High.
 
 ### K-means elbow analysis
 
-![K-means elbow method](outputs/screenshots/kmeans_elbow_method.jpg)
+![K-means elbow method](outputs/screenshots/kmeans_elbow_method.svg)
 
 The project uses three clusters because the basketball use case calls for Low / Medium / High environments, while the elbow view is used as a reasonableness check rather than choosing the number of clusters blindly.
 
@@ -214,8 +214,8 @@ ncaa-transfer-performance-translation/
 │   ├── model_metrics.json
 │   ├── transition_summary.csv
 │   └── screenshots/
-│       ├── team_environment_profiles.jpg
-│       └── kmeans_elbow_method.jpg
+│       ├── team_environment_profiles.svg
+│       └── kmeans_elbow_method.svg
 ├── src/
 │   ├── generate_demo_data.py
 │   ├── build_model.py
