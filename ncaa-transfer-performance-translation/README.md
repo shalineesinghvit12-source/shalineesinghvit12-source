@@ -8,6 +8,26 @@ The project is designed around a transfer-portal / recruiting workflow. It combi
 
 > **Portfolio data note:** The repository includes deterministic synthetic NCAA-like demo data so the workflow can run end to end without redistributing licensed or proprietary data. The same pipeline is designed to accept real historical team, player-season, and transfer datasets when available.
 
+## Analytics workflow
+
+`clean & validate → EDA → K-means team profiles → transfer-level feature engineering → Linear Regression / Decision Tree / Random Forest → KNN comparables → staff-facing output`
+
+## Selected analysis screenshots
+
+The screenshots below are from the Google Colab analysis used to develop and explain the workflow.
+
+### Low / Medium / High team environment profiles
+
+![Low Medium High team profiles](outputs/screenshots/team_environment_profiles.jpg)
+
+The team-season observations are grouped with K-means using offensive, defensive, pace, shooting, turnover, rebounding, free-throw and schedule-strength features. Cluster numbers are then ordered by average Net Rating and labeled Low, Medium and High.
+
+### K-means elbow analysis
+
+![K-means elbow method](outputs/screenshots/kmeans_elbow_method.jpg)
+
+The project uses three clusters because the basketball use case calls for Low / Medium / High environments, while the elbow view is used as a reasonableness check rather than choosing the number of clusters blindly.
+
 ## Business questions
 
 1. What do team environments look like over multiple seasons?
@@ -17,26 +37,30 @@ The project is designed around a transfer-portal / recruiting workflow. It combi
 5. Can historical data estimate post-transfer Offensive Rating, True Shooting %, PPG, and Usage %?
 6. Which historical transfers are most similar to a current candidate?
 
-## End-to-end analytics workflow
+## 1. Data ingestion
 
-### 1. Data ingestion
 Expected real-world tables:
 
 - `team_seasons`: one row per team-season
 - `player_seasons`: one row per player-team-season
 - `transfers`: one row per school-to-school move, or derived from consecutive player seasons
 
-### 2. Data cleaning and validation
+The included demo generator produces the same logical tables so the project can run without external data.
 
-- check shape, schema, data types, and season coverage
-- standardize team/player text fields
-- remove or investigate duplicate team-season and player-season records
-- quantify missing values before imputation or exclusion
-- verify unrealistic ranges rather than automatically deleting legitimate high performers
-- create `Net Rating = Offensive Rating - Defensive Rating`
-- validate joins across team, player, season, and transfer identifiers
+## 2. Data cleaning and validation
 
-### 3. Exploratory analysis
+The workflow checks:
+
+- shape, schema, data types, and season coverage
+- duplicate team-season and transfer records
+- missing values in modeling features
+- standardized team text fields for joins
+- `Net Rating = Offensive Rating - Defensive Rating`
+- consistency across team, season, player, source-team and destination-team keys
+
+Extreme basketball performances are not automatically deleted as outliers; they should first be checked for data-quality problems.
+
+## 3. Exploratory data analysis
 
 Key views include:
 
@@ -44,10 +68,13 @@ Key views include:
 - Offensive Rating vs Defensive Rating
 - Net Rating by season
 - correlations among efficiency/style metrics
+- player PPG distribution / outlier checks
 - pre-transfer vs post-transfer production
-- transition summaries such as Low → High and Medium → High
+- Low → High and Medium → High transition summaries
 
-### 4. Team profiling with K-means
+The reproducible chart script is `src/visualize_results.py`. Running the pipeline creates portfolio charts in `outputs/`.
+
+## 4. Team profiling with K-means
 
 Team profile features:
 
@@ -66,9 +93,9 @@ The features are standardized before K-means because clustering is distance-base
 - **Medium**
 - **High**
 
-This is more defensible than manually assigning arbitrary ORtg/DRtg thresholds.
+This avoids manually assigning arbitrary ORtg/DRtg thresholds.
 
-### 5. Transfer modeling table
+## 5. Transfer modeling table
 
 Each historical transfer becomes one modeling row containing:
 
@@ -105,31 +132,39 @@ Each historical transfer becomes one modeling row containing:
 - post-transfer PPG
 - post-transfer Usage %
 
-## Predictive models
+## 6. Predictive models
 
-The project intentionally compares model families covered in standard supervised-learning coursework:
+The main regression models intentionally match models covered in supervised-learning coursework.
 
 ### Linear Regression
 Used as the interpretable baseline. It tests whether post-transfer outcomes can be explained reasonably well through approximately linear relationships.
 
 ### Decision Tree Regression
-Adds interpretable nonlinear thresholds and interactions.
+Adds nonlinear threshold relationships and interactions while remaining relatively easy to explain.
 
 ### Random Forest Regression
-Combines many trees to capture more complex nonlinear relationships while reducing the instability of a single decision tree.
+Combines many trees to capture more complex relationships and reduce the instability of a single decision tree.
 
-For each target, the models are evaluated on held-out data using:
+For each target, the models are compared using:
 
-- **MAE** — average absolute prediction error
+- **MAE** — average absolute prediction error; lower is better
 - **R²** — proportion of target variation explained
 
-The model with the lowest held-out MAE is selected for that target.
+The selected model is the one with the lowest test MAE.
 
-## KNN / comparable-player layer
+## 7. Validation design
 
-Nearest-neighbor similarity is used as a staff-facing interpretation layer rather than only relying on one model prediction.
+The current model code prefers a **time-based split**:
 
-A candidate can be compared with historical transfers based on features such as:
+> train on earlier transfer seasons → test on the most recent destination season
+
+This better represents the real recruiting use case than randomly mixing past and future seasons. A deterministic 75/25 fallback is used only when the available demo sample is too small for a reasonable latest-season test set.
+
+## 8. KNN / comparable-player layer
+
+Nearest-neighbor similarity is used as a staff-facing interpretation layer rather than relying only on one model prediction.
+
+A candidate is compared with historical transfers using features such as:
 
 - pre-transfer PPG
 - pre-transfer Usage %
@@ -138,62 +173,54 @@ A candidate can be compared with historical transfers based on features such as:
 - source team Net Rating / schedule strength
 - destination team Net Rating / schedule strength
 
-This supports outputs such as:
+The dashboard can therefore show both a model projection and the most statistically similar historical transfer records.
 
-> “These are the historical transfers most statistically similar to this player, and this is how their production changed after transfer.”
+## 9. Staff-facing Streamlit dashboard
 
-## Why these models?
+`app/streamlit_app.py` lets a user:
 
-The project uses a simple progression:
+- choose a destination team-season
+- review destination ORtg, DRtg, Net Rating and tier
+- enter a candidate's pre-transfer production
+- enter source-team context
+- project post-transfer ORtg, TS%, PPG and Usage%
+- view the model selected for the primary target and its held-out error
+- review five comparable historical transfers
+- inspect aggregate historical transition results
 
-`K-means team profiling → Linear Regression baseline → Decision Tree → Random Forest → KNN comparables`
-
-This keeps the methodology understandable to non-technical stakeholders while still allowing nonlinear relationships and historical similarity analysis.
+The intent is decision support, not replacement of film, coaching judgment, role/lineup fit, availability, medical information or direct scouting.
 
 ## Optional Phase 2: classification
 
-A future extension could define a basketball-staff-approved outcome such as `successful high-major contributor: Yes/No` and compare:
+If basketball staff define an operational outcome such as `successful high-major contributor: Yes/No`, a later phase could compare:
 
 - Logistic Regression
 - KNN Classification
 - Decision Tree Classification
 - Random Forest Classification
 
-That classification target should only be created after the staff defines what “success” means operationally.
-
-## Validation recommendation for real historical data
-
-A random train/test split is useful during prototyping, but a stronger sports-analytics validation design is:
-
-> **Train on earlier seasons → test on the most recent season.**
-
-This more closely matches the real recruiting use case: learn from historical transfers and project future outcomes.
-
-## Decision-support output
-
-A staff-facing result should prioritize a few actionable views:
-
-1. Candidate player profile
-2. Source team ORtg / DRtg / Net Rating / tier
-3. Destination team ORtg / DRtg / Net Rating / tier
-4. Projected post-transfer efficiency and role
-5. Historical transition averages
-6. Comparable historical transfers
-7. Important model features
-8. Model error / uncertainty and limitations
-
-The model is intended to **support**, not replace, film review, coaching judgment, role/lineup fit, medical information, player development, and direct scouting.
+The definition of "success" should come from staff rather than being invented solely for modeling convenience.
 
 ## Project structure
 
 ```text
-.
+ncaa-transfer-performance-translation/
 ├── app/
 │   └── streamlit_app.py
+├── data/
+│   └── README.md
+├── outputs/
+│   ├── README.md
+│   ├── model_metrics.json
+│   ├── transition_summary.csv
+│   └── screenshots/
+│       ├── team_environment_profiles.jpg
+│       └── kmeans_elbow_method.jpg
 ├── src/
 │   ├── generate_demo_data.py
 │   ├── build_model.py
-│   └── predict.py
+│   ├── predict.py
+│   └── visualize_results.py
 ├── run_pipeline.py
 ├── requirements.txt
 └── README.md
@@ -212,8 +239,8 @@ streamlit run app/streamlit_app.py
 
 ## Moving from demo data to real historical data
 
-Replace the demo CSV inputs with validated historical files using the documented schema. Keep the same analytics sequence:
+Replace the generated demo CSVs with validated historical files using the documented schema. Keep the same sequence:
 
-`clean → validate → EDA → team profiling → transfers → feature engineering → model comparison → historical comparables → staff-facing visualization`
+`clean → validate → EDA → team profiling → transfers → feature engineering → time-based model validation → historical comparables → staff-facing visualization`
 
-Real basketball conclusions will only be reported after retraining and validating the pipeline on actual historical data.
+Real basketball conclusions should only be reported after retraining and validating the pipeline on actual historical data.
