@@ -20,7 +20,6 @@ from sklearn.neighbors import NearestNeighbors
 import joblib
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "data"
 OUT = ROOT / "outputs"
 OUT.mkdir(exist_ok=True)
 
@@ -29,7 +28,6 @@ TEAM_FEATURES = [
     "turnover_pct", "off_rebound_pct", "free_throw_rate",
     "strength_of_schedule_z"
 ]
-
 NUM_FEATURES = [
     "pre_minutes", "pre_ppg", "pre_usage", "pre_ts", "pre_ast",
     "pre_tov", "pre_reb", "pre_player_ortg",
@@ -40,39 +38,14 @@ CAT_FEATURES = ["position", "source_tier", "dest_tier", "transition"]
 TARGETS = ["post_player_ortg", "post_ts", "post_ppg", "post_usage"]
 
 
-def clean_validate(teams: pd.DataFrame, transfers: pd.DataFrame):
-    """Basic quality checks before analytics/modeling."""
-    teams = teams.drop_duplicates(subset=["season", "team"]).copy()
-    transfers = transfers.drop_duplicates().copy()
-
-    required_team = ["season", "team", "offensive_rating", "defensive_rating"]
-    required_transfer = ["player_id", "from_season", "to_season", "from_team", "to_team"]
-    missing_team = [c for c in required_team if c not in teams.columns]
-    missing_transfer = [c for c in required_transfer if c not in transfers.columns]
-    if missing_team or missing_transfer:
-        raise ValueError(f"Missing required columns. team={missing_team}, transfer={missing_transfer}")
-
-    teams["team"] = teams["team"].astype(str).str.strip()
-    transfers["from_team"] = transfers["from_team"].astype(str).str.strip()
-    transfers["to_team"] = transfers["to_team"].astype(str).str.strip()
-
-    if "net_rating" not in teams.columns:
-        teams["net_rating"] = teams["offensive_rating"] - teams["defensive_rating"]
-
-    teams = teams.dropna(subset=TEAM_FEATURES + ["net_rating"])
-    transfers = transfers.dropna(subset=NUM_FEATURES + TARGETS)
-    return teams, transfers
-
-
 def profile_teams(teams: pd.DataFrame):
-    """Standardize team metrics, run K-means, label clusters Low/Medium/High."""
+    """Standardize team metrics, run K-means, and label clusters Low/Medium/High."""
     scaler = StandardScaler()
-    Z = scaler.fit_transform(teams[TEAM_FEATURES])
+    matrix = scaler.fit_transform(teams[TEAM_FEATURES])
+    km = KMeans(n_clusters=3, n_init=30, random_state=42).fit(matrix)
 
-    km = KMeans(n_clusters=3, n_init=30, random_state=42).fit(Z)
     prof = teams.copy()
     prof["cluster"] = km.labels_
-
     cluster_strength = prof.groupby("cluster")["net_rating"].mean().sort_values()
     tier_map = {
         cluster_strength.index[0]: "Low",
@@ -81,9 +54,8 @@ def profile_teams(teams: pd.DataFrame):
     }
     prof["tier"] = prof["cluster"].map(tier_map)
     prof["net_rating_percentile"] = prof["net_rating"].rank(pct=True).mul(100).round(1)
-
-    nn = NearestNeighbors(metric="euclidean", n_neighbors=min(10, len(prof))).fit(Z)
-    return prof, scaler, km, nn, Z
+    team_nn = NearestNeighbors(metric="euclidean", n_neighbors=min(10, len(prof))).fit(matrix)
+    return prof, scaler, km, team_nn, matrix
 
 
 def attach_tiers(transfers: pd.DataFrame, prof: pd.DataFrame):
@@ -104,7 +76,6 @@ def make_pipeline(kind: str):
         ("num", StandardScaler(), NUM_FEATURES),
         ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), CAT_FEATURES),
     ])
-
     if kind == "linear":
         model = LinearRegression()
     elif kind == "tree":
@@ -116,7 +87,6 @@ def make_pipeline(kind: str):
         )
     else:
         raise ValueError(f"Unknown model kind: {kind}")
-
     return Pipeline([("prep", prep), ("model", model)])
 
 
@@ -125,9 +95,7 @@ def time_split(df: pd.DataFrame):
     latest = df["to_season"].max()
     train_idx = np.flatnonzero((df["to_season"] < latest).to_numpy())
     test_idx = np.flatnonzero((df["to_season"] == latest).to_numpy())
-
     if len(train_idx) < 30 or len(test_idx) < 10:
-        # Deterministic fallback for very small demonstration datasets.
         rng = np.random.default_rng(42)
         idx = np.arange(len(df))
         rng.shuffle(idx)
@@ -140,14 +108,12 @@ def train_models(df: pd.DataFrame):
     """Compare Linear Regression, Decision Tree, and Random Forest by test MAE."""
     X = df[NUM_FEATURES + CAT_FEATURES]
     train_idx, test_idx, validation = time_split(df)
-
     results = {}
     selected_models = {}
 
     for target in TARGETS:
         y = df[target]
         candidates = {}
-
         for kind in ["linear", "tree", "rf"]:
             pipe = make_pipeline(kind)
             pipe.fit(X.iloc[train_idx], y.iloc[train_idx])
@@ -157,7 +123,6 @@ def train_models(df: pd.DataFrame):
                 "r2": float(r2_score(y.iloc[test_idx], pred)),
                 "model": pipe,
             }
-
         best = min(candidates, key=lambda k: candidates[k]["mae"])
         selected_models[target] = candidates[best]["model"]
         results[target] = {
@@ -169,7 +134,6 @@ def train_models(df: pd.DataFrame):
             "rf_mae": round(candidates["rf"]["mae"], 3),
             "validation": validation,
         }
-
     return selected_models, results
 
 
@@ -186,13 +150,12 @@ def build_player_similarity(df: pd.DataFrame):
 
 
 if __name__ == "__main__":
-    teams = pd.read_csv(DATA / "team_seasons_demo.csv")
-    transfers = pd.read_csv(DATA / "transfers_demo.csv")
+    # clean_data.py runs first and creates these validated inputs.
+    teams = pd.read_csv(OUT / "team_seasons_clean.csv")
+    transfers = pd.read_csv(OUT / "transfers_clean.csv")
 
-    teams, transfers = clean_validate(teams, transfers)
     prof, scaler, km, team_nn, team_matrix = profile_teams(teams)
     trans = attach_tiers(transfers, prof)
-
     models, metrics = train_models(trans)
     player_scaler, player_nn, player_matrix, player_similarity_features = build_player_similarity(trans)
 
@@ -219,12 +182,9 @@ if __name__ == "__main__":
 
     summary = trans.groupby("transition").agg(
         n=("player_id", "size"),
-        pre_ortg=("pre_player_ortg", "mean"),
-        post_ortg=("post_player_ortg", "mean"),
-        pre_ts=("pre_ts", "mean"),
-        post_ts=("post_ts", "mean"),
-        pre_ppg=("pre_ppg", "mean"),
-        post_ppg=("post_ppg", "mean"),
+        pre_ortg=("pre_player_ortg", "mean"), post_ortg=("post_player_ortg", "mean"),
+        pre_ts=("pre_ts", "mean"), post_ts=("post_ts", "mean"),
+        pre_ppg=("pre_ppg", "mean"), post_ppg=("post_ppg", "mean"),
     ).reset_index()
     summary["ortg_change"] = summary.post_ortg - summary.pre_ortg
     summary["ts_change"] = summary.post_ts - summary.pre_ts
