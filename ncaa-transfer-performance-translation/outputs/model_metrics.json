@@ -1,0 +1,30 @@
+{
+  "post_player_ortg": {
+    "selected_model": "ridge",
+    "mae": 2.167,
+    "r2": 0.899,
+    "ridge_mae": 2.167,
+    "rf_mae": 2.423
+  },
+  "post_ts": {
+    "selected_model": "ridge",
+    "mae": 1.761,
+    "r2": 0.675,
+    "ridge_mae": 1.761,
+    "rf_mae": 1.832
+  },
+  "post_ppg": {
+    "selected_model": "ridge",
+    "mae": 2.683,
+    "r2": 0.782,
+    "ridge_mae": 2.683,
+    "rf_mae": 2.746
+  },
+  "post_usage": {
+    "selected_model": "ridge",
+    "mae": 1.751,
+    "r2": 0.793,
+    "ridge_mae": 1.751,
+    "rf_mae": 1.812
+  }
+}
