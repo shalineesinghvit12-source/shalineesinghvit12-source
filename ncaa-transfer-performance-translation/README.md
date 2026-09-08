@@ -16,7 +16,8 @@ These views correspond to the exploratory analysis and team-profiling work compl
 
 ### 1. Player PPG distribution / outlier check
 
-![Points Per Game boxplot](outputs/screenshots/points_per_game_boxplot.svg)
+![Points Per Game boxplot]<img width="408" height="252" alt="image" src="https://github.com/user-attachments/assets/81936b60-8bef-4f21-948a-c6167c2c76eb" />
+
 
 Used during data-quality review to understand the player scoring distribution and inspect extreme values rather than automatically removing high performers.
 
