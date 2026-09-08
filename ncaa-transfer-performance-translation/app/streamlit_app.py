@@ -20,7 +20,7 @@ st.set_page_config(page_title="NCAA Transfer Translation", layout="wide")
 st.title("NCAA Transfer Performance Translation")
 st.caption(
     "Decision-support prototype using synthetic NCAA-like demo data. "
-    "The same pipeline can be retrained on validated historical team, player, and transfer data."
+    "The same workflow is designed to be retrained on validated historical team, player and transfer data."
 )
 
 st.subheader("1. Destination environment")
@@ -53,10 +53,7 @@ pre_tov = c1.number_input("Turnover %", 5.0, 35.0, 16.0)
 pre_reb = c2.number_input("Rebound %", 1.0, 35.0, 9.0)
 src_ortg = c3.number_input("Source Team ORtg", 85.0, 135.0, 106.0)
 src_drtg = c4.number_input("Source Team DRtg", 85.0, 135.0, 112.0)
-
-source_sos = st.slider(
-    "Source strength-of-schedule z-score", -2.5, 2.5, -0.5, 0.1
-)
+source_sos = st.slider("Source strength-of-schedule z-score", -2.5, 2.5, -0.5, 0.1)
 
 if st.button("Project translation", type="primary"):
     row = {
@@ -92,20 +89,35 @@ if st.button("Project translation", type="primary"):
     cols[3].metric("Projected Usage%", prediction["post_usage"])
 
     primary = metrics["post_player_ortg"]
+    validation = primary.get("validation", "held-out test set")
     st.caption(
-        f"Primary ORtg model selected by held-out MAE: "
-        f"{primary['selected_model'].replace('_', ' ').title()} "
-        f"(MAE {primary['mae']:.2f}, R² {primary['r2']:.2f})."
+        f"Primary ORtg model: {primary['selected_model'].replace('_', ' ').title()} | "
+        f"MAE {primary['mae']:.2f} | R² {primary['r2']:.2f} | Validation: {validation}"
     )
 
     st.subheader("4. Comparable historical transfers")
     comparable = find_comparable_transfers(row, trans, n_neighbors=5)
     st.dataframe(comparable, use_container_width=True)
 
+    transition = f"{source_tier} → {destrow.tier}"
+    transition_rows = trans[trans["transition"] == transition]
+    if not transition_rows.empty:
+        st.subheader("5. Historical transition context")
+        h1, h2, h3 = st.columns(3)
+        h1.metric("Historical transfers", len(transition_rows))
+        h2.metric(
+            "Avg PPG change",
+            f"{(transition_rows['post_ppg'] - transition_rows['pre_ppg']).mean():+.2f}"
+        )
+        h3.metric(
+            "Avg ORtg change",
+            f"{(transition_rows['post_player_ortg'] - transition_rows['pre_player_ortg']).mean():+.2f}"
+        )
+
     st.info(
-        "Use the projection and comparables as decision-support signals. "
-        "A production version should be retrained and validated on real historical transfers "
-        "and supplemented by film, role/lineup fit, coaching system, availability, and scouting judgment."
+        "Use the projection, historical transition context and comparable players as decision-support signals. "
+        "A production version should be retrained on real historical transfers and combined with film, role/lineup fit, "
+        "coaching-system context, availability and scouting judgment."
     )
 
 st.subheader("Historical transition summary")
@@ -122,5 +134,6 @@ for target, values in metrics.items():
         "Linear MAE": values["linear_mae"],
         "Tree MAE": values["tree_mae"],
         "Random Forest MAE": values["rf_mae"],
+        "Validation": values.get("validation", "held-out test set"),
     })
 st.dataframe(pd.DataFrame(model_rows), use_container_width=True)
